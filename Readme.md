@@ -1,3 +1,9 @@
+<!-- default file list -->
+*Files to look at*:
+
+* [MetadataObjects.cs](./CS/MetadataObjects.cs) (VB: [MetadataObjects.vb](./VB/MetadataObjects.vb))
+* [Program.cs](./CS/Program.cs) (VB: [Program.vb](./VB/Program.vb))
+<!-- default file list end -->
 # How to persist metadata
 
 
