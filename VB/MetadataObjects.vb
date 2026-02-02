@@ -1,11 +1,11 @@
-﻿Imports System
+Imports System
 Imports System.Collections.Generic
-Imports System.Text
 Imports DevExpress.Xpo
 Imports DevExpress.Xpo.Metadata
 
 Namespace PersistentMetadata
-    <NonPersistent> _
+
+    <NonPersistent>
     Public Class MyBaseObject
         Inherits XPObject
 
@@ -22,17 +22,19 @@ Namespace PersistentMetadata
         End Sub
 
         Private _Name As String
-        Public Property Name() As String
+
+        Public Property Name As String
             Get
                 Return _Name
             End Get
+
             Set(ByVal value As String)
                 SetPropertyValue("Name", _Name, value)
             End Set
         End Property
 
-        <Association> _
-        Public ReadOnly Property TypeAttributes() As XPCollection(Of PersistentAttributeInfo)
+        <Association>
+        Public ReadOnly Property TypeAttributes As XPCollection(Of PersistentAttributeInfo)
             Get
                 Return GetCollection(Of PersistentAttributeInfo)("TypeAttributes")
             End Get
@@ -41,7 +43,7 @@ Namespace PersistentMetadata
         Protected Sub CreateAttributes(ByVal ti As XPTypeInfo)
             For Each a As PersistentAttributeInfo In TypeAttributes
                 ti.AddAttribute(a.Create())
-            Next a
+            Next
         End Sub
     End Class
 
@@ -51,10 +53,11 @@ Namespace PersistentMetadata
         Public Shared Sub FillDictionary(ByVal dictionary As XPDictionary, ByVal data As ICollection(Of PersistentClassInfo))
             For Each twc As PersistentClassInfo In data
                 twc.CreateClass(dictionary)
-            Next twc
+            Next
+
             For Each twc As PersistentClassInfo In data
                 twc.CreateMembers(dictionary)
-            Next twc
+            Next
         End Sub
 
         Public Const AssemblyName As String = ""
@@ -76,9 +79,11 @@ Namespace PersistentMetadata
                 Else
                     baseClassInfo = dictionary.GetClassInfo(GetDefaultBaseClass())
                 End If
+
                 result = dictionary.CreateClass(baseClassInfo, Name)
                 CreateAttributes(result)
             End If
+
             Return result
         End Function
 
@@ -86,26 +91,29 @@ Namespace PersistentMetadata
             Dim ci As XPClassInfo = dictionary.GetClassInfo(AssemblyName, Name)
             For Each mi As PersistentMemberInfo In OwnMembers
                 mi.CreateMember(ci)
-            Next mi
+            Next
         End Sub
 
         Private _BaseClass As PersistentClassInfo
-        Public Property BaseClass() As PersistentClassInfo
+
+        Public Property BaseClass As PersistentClassInfo
             Get
                 Return _BaseClass
             End Get
+
             Set(ByVal value As PersistentClassInfo)
                 SetPropertyValue("BaseClass", _BaseClass, value)
             End Set
         End Property
 
-        <Association> _
-        Public ReadOnly Property OwnMembers() As XPCollection(Of PersistentMemberInfo)
+        <Association>
+        Public ReadOnly Property OwnMembers As XPCollection(Of PersistentMemberInfo)
             Get
                 Return GetCollection(Of PersistentMemberInfo)("OwnMembers")
             End Get
         End Property
     End Class
+
     Public MustInherit Class PersistentMemberInfo
         Inherits PersistentTypeInfo
 
@@ -115,9 +123,7 @@ Namespace PersistentMetadata
 
         Friend Function CreateMember(ByVal owner As XPClassInfo) As XPMemberInfo
             Dim result As XPMemberInfo = owner.FindMember(Name)
-            If result Is Nothing Then
-                result = CreateMemberCore(owner)
-            End If
+            If result Is Nothing Then result = CreateMemberCore(owner)
             CreateAttributes(result)
             Return result
         End Function
@@ -125,11 +131,13 @@ Namespace PersistentMetadata
         Protected MustOverride Function CreateMemberCore(ByVal owner As XPClassInfo) As XPMemberInfo
 
         Private _Owner As PersistentClassInfo
-        <Association> _
-        Public Property Owner() As PersistentClassInfo
+
+        <Association>
+        Public Property Owner As PersistentClassInfo
             Get
                 Return _Owner
             End Get
+
             Set(ByVal value As PersistentClassInfo)
                 SetPropertyValue("Owner", _Owner, value)
             End Set
@@ -144,10 +152,12 @@ Namespace PersistentMetadata
         End Sub
 
         Private _ReferenceType As PersistentClassInfo
-        Public Property ReferenceType() As PersistentClassInfo
+
+        Public Property ReferenceType As PersistentClassInfo
             Get
                 Return _ReferenceType
             End Get
+
             Set(ByVal value As PersistentClassInfo)
                 SetPropertyValue("ReferenceType", _ReferenceType, value)
             End Set
@@ -179,10 +189,12 @@ Namespace PersistentMetadata
         End Sub
 
         Private _TypeName As String
-        Public Property TypeName() As String
+
+        Public Property TypeName As String
             Get
                 Return _TypeName
             End Get
+
             Set(ByVal value As String)
                 SetPropertyValue("TypeName", _TypeName, value)
             End Set
@@ -203,11 +215,13 @@ Namespace PersistentMetadata
         Public MustOverride Function Create() As Attribute
 
         Private _Owner As PersistentTypeInfo
-        <Association> _
-        Public Property Owner() As PersistentTypeInfo
+
+        <Association>
+        Public Property Owner As PersistentTypeInfo
             Get
                 Return _Owner
             End Get
+
             Set(ByVal value As PersistentTypeInfo)
                 SetPropertyValue("Owner", _Owner, value)
             End Set
@@ -222,30 +236,36 @@ Namespace PersistentMetadata
         End Sub
 
         Private _an As String
-        Public Property AssociationName() As String
+
+        Public Property AssociationName As String
             Get
                 Return _an
             End Get
+
             Set(ByVal value As String)
                 SetPropertyValue("AssociationName", _an, value)
             End Set
         End Property
 
         Private _ean As String
-        Public Property ElementAssemblyName() As String
+
+        Public Property ElementAssemblyName As String
             Get
                 Return _ean
             End Get
+
             Set(ByVal value As String)
                 SetPropertyValue("ElementAssemblyName", _ean, value)
             End Set
         End Property
 
         Private _etn As String
-        Public Property ElementTypeName() As String
+
+        Public Property ElementTypeName As String
             Get
                 Return _etn
             End Get
+
             Set(ByVal value As String)
                 SetPropertyValue("ElementTypeName", _etn, value)
             End Set
